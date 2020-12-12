@@ -7,33 +7,36 @@ namespace Pythagorean_Triplet_in_an_array
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var nums = new int[] { 3, 1, 4, 6, 5 };
+            var result = GetTriplet(nums);
+            foreach (var n in result)
+                Console.WriteLine(string.Join(" ", n));
         }
 
 
         // O(N2) and no extra space.
-        static IList<List<int>> GetTriplet(int[] nums)
+        static IList<List<double>> GetTriplet(int[] nums)
         {
             if (nums == null || nums.Length == 0) return null;
-            IList<List<int>> output = new List<List<int>>();
+            IList<List<double>> output = new List<List<double>>();
             for (int i = 0; i < nums.Length; i++)
             {
                 nums[i] = nums[i] * nums[i];
             }
             Array.Sort(nums);
 
-            int l = 0;
             for (int i = nums.Length - 1; i >= 2; i--)
             {
+                int l = 0;
                 int r = i - 1;
                 while (l < r)
                 {
                     int lVal = nums[l];
-                    int rval = nums[r];
-                    int sum = Convert.ToInt32(Math.Pow(lVal, 2) + Math.Pow(rval, 2));
+                    int rVal = nums[r];
+                    int sum = lVal + rVal;
                     if (nums[i] == sum)
-                        output.Add(new List<int>() { lVal, rval, nums[i] });
-                    else if (sum < nums[i]) l++;
+                        output.Add(new List<double>() { Math.Sqrt(lVal), Math.Sqrt(rVal), Math.Sqrt(nums[i]) });
+                    if (sum < nums[i]) l++;
                     else r--;
                 }
             }
